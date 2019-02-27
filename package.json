@@ -1,13 +1,13 @@
 {
-  "name": "imgix-photo",
+  "name": "@precision-nutrition/imgix-photo",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Common component for photos displayed via Imgix",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/PrecisionNutrition/imgix-photo.git",
   "license": "MIT",
-  "author": "",
+  "author": "The fine and funky folks at Precision Nutrition",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -21,7 +21,8 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.1.2"
+    "ember-cli-babel": "^7.1.2",
+    "ember-cli-htmlbars": "^3.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
@@ -29,7 +30,6 @@
     "ember-cli": "~3.7.1",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-eslint": "^4.2.3",
-    "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-sri": "^2.1.1",
@@ -47,7 +47,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.8.0"
+    "qunit-dom": "^0.8.4"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
