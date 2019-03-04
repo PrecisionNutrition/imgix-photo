@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import { and } from '@ember/object/computed';
 
 /**
  * Display an image we have previously uploaded the Imgix API.
@@ -19,6 +19,15 @@ export default Component.extend({
   ],
 
   alt: null,
+
+  autoSetDimensions: true,
+
+  includeDimensions: computed('autoSetDimensions', function() {
+    let { autoSetDimensions } = this;
+
+    // need `null` to exclude attribute from bindings
+    return autoSetDimensions ? true : null;
+  }),
 
   params: null,
 
@@ -48,7 +57,7 @@ export default Component.extend({
     return `${url}?${queryParams}`;
   }),
 
-  width: readOnly('params.w'),
+  width: and('includeDimensions', 'params.w'),
 
-  height: readOnly('params.h'),
+  height: and('includeDimensions', 'params.h'),
 });
