@@ -18,7 +18,6 @@ module('Integration | Component | imgix-photo', function(hooks) {
       sepia: 88
     });
 
-
     let dpr = window.devicePixelRatio;
 
     let expectedSrc = `${actualImgUrl}?dpr=${dpr}&w=300&h=400&fit=crop&sepia=88`;
@@ -44,5 +43,40 @@ module('Integration | Component | imgix-photo', function(hooks) {
     assert.dom('img').hasAttribute('src', expectedSrc);
 
     assert.dom('img').hasClass('SomeClass');
+  });
+
+  test('can exclude width and height attributes even when params set', async function(assert) {
+    this.setProperties({
+      alt: 'Test!',
+      url: actualImgUrl,
+      w: 300,
+      h: 400,
+      fit: 'crop',
+      sepia: 88
+    });
+
+
+    let dpr = window.devicePixelRatio;
+
+    let expectedSrc = `${actualImgUrl}?dpr=${dpr}&w=300&h=400&fit=crop&sepia=88`;
+
+    await render(hbs`{{imgix-photo
+      autoSetDimensions=false
+      url=url
+      alt=alt
+      params=(hash
+        w=w
+        h=h
+        fit=fit
+        sepia=sepia
+      )
+      class="SomeClass"
+    }}`);
+
+    assert.dom('img').doesNotHaveAttribute('width', '300');
+
+    assert.dom('img').doesNotHaveAttribute('height', '400');
+
+    assert.dom('img').hasAttribute('src', expectedSrc);
   });
 });
