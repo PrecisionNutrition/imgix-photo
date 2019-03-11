@@ -3,7 +3,6 @@ imgix-photo [![CircleCI](https://circleci.com/gh/PrecisionNutrition/imgix-photo.
 
 Provides a low-level component for rendering images that use the Imgix service.
 
-
 Compatibility
 ------------------------------------------------------------------------------
 
@@ -34,6 +33,17 @@ Usage
 
 Where `@params` uses the `{{hash` helper to specify any supported option for
 Imgix.
+
+### Other Properties
+
+* `autoSetDimensions`: set to `false` if you don't want the rendered `<img` to
+  have its `width` and `height` properties set. This is useful if you want a
+  "responsive" image.
+
+### Class Names
+
+* Loading images will have an `.is-loading` class
+* Completed images will have an `.is-complete` class
 
 License
 ------------------------------------------------------------------------------

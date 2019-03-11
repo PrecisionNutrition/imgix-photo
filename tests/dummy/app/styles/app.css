@@ -1,0 +1,33 @@
+.SomeClass {
+  transition: border 120ms ease-out;
+  border: 5px solid white;
+}
+
+.SomeClass.is-complete {
+  border-color: silver;
+}
+
+.SomeClass.is-loading {
+  width: 200px;
+  height: 300px;
+}
+
+.Frame {
+  max-width: 300px;
+  max-height: 400px;
+}
+
+.SomeClass--responsive.SomeClass {
+  width: 100%;
+  height: 100%;
+
+  transition: background-color 120ms ease-in;
+}
+
+.SomeClass--responsive .SomeClass.is-loading {
+  background-color: silver;
+}
+
+.SomeClass--responsive .SomeClass.is-complete {
+  background-color: white;
+}

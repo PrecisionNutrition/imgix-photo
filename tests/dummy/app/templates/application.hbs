@@ -1,4 +1,6 @@
-<h2 id="title">Low Level <tt>ImgixPhoto</tt> Component</h2>
+<h1 id="title">Low Level <tt>ImgixPhoto</tt> Component</h1>
+
+<h2>Basic usage</h2>
 
 <ImgixPhoto
   @alt="Yo dawg"
@@ -11,3 +13,20 @@
   }}
   @class="SomeClass"
 />
+
+<h2>Kinda sorta responsive usage</h2>
+
+<div class="Frame">
+  <ImgixPhoto
+    @autoSetDimensions={{false}}
+    @alt="I'm kinda sort responsive"
+    @url={{actualImgUrl}}
+    @params={{hash
+      w="200"
+      h="300"
+      sepia="88"
+      fit="crop"
+    }}
+    @class="SomeClass SomeClass--responsive"
+  />
+</div>
