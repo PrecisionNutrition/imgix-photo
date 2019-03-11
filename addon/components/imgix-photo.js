@@ -3,6 +3,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { and } from '@ember/object/computed';
 
+import { task, waitForEvent } from 'ember-concurrency';
+
 /**
  * Display an image we have previously uploaded the Imgix API.
  *
@@ -17,6 +19,24 @@ export default Component.extend({
     'imgSrc:src',
     'width',
   ],
+
+  classNameBindings: [
+    'isComplete',
+    'isLoading',
+  ],
+
+  isComplete: false,
+  isLoading: true,
+
+  updateStateClasses: task(function * () {
+    yield waitForEvent(this.element, 'load');
+
+    this.setProperties({
+      isComplete: true,
+      isLoading: false,
+    });
+  }).on('didRender')
+    .cancelOn('willDestroyElement'),
 
   alt: null,
 
