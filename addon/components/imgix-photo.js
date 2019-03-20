@@ -5,6 +5,8 @@ import { and } from '@ember/object/computed';
 
 import { task, waitForEvent } from 'ember-concurrency';
 
+import buildQueryParams from '../utils/build-query-params';
+
 /**
  * Display an image we have previously uploaded the Imgix API.
  *
@@ -58,14 +60,7 @@ export default Component.extend({
     let params = this.params || {};
     let finalParams = Object.assign(defaultParams, params);
 
-    let joinedParams = Object
-      .entries(finalParams)
-      .map(function([key, value]) {
-        return `${key}=${value}`;
-      })
-      .join('&');
-
-    return joinedParams;
+    return buildQueryParams(finalParams);
   }),
 
   imgSrc: computed('url', 'queryParams', function() {
