@@ -20,7 +20,7 @@ module('Integration | Component | imgix-photo', function(hooks) {
 
     let dpr = window.devicePixelRatio;
 
-    let expectedSrc = `${actualImgUrl}?dpr=${dpr}&w=300&h=400&fit=crop&sepia=88`;
+    let expectedSrc = `${actualImgUrl}?dpr=${dpr}&fit=crop&h=400&sepia=88&w=300`;
 
     await render(hbs`{{imgix-photo
       url=url
@@ -58,7 +58,7 @@ module('Integration | Component | imgix-photo', function(hooks) {
 
     let dpr = window.devicePixelRatio;
 
-    let expectedSrc = `${actualImgUrl}?dpr=${dpr}&w=300&h=400&fit=crop&sepia=88`;
+    let expectedSrc = `${actualImgUrl}?dpr=${dpr}&fit=crop&h=400&sepia=88&w=300`;
 
     await render(hbs`{{imgix-photo
       autoSetDimensions=false
