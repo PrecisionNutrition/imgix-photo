@@ -1,6 +1,6 @@
 {
   "name": "@precision-nutrition/imgix-photo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Common component for photos displayed via Imgix",
   "keywords": [
     "ember-addon"
