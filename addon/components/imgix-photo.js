@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 import { computed } from '@ember/object';
-import { and } from '@ember/object/computed';
+import { and, match } from '@ember/object/computed';
 
 import { task, waitForEvent } from 'ember-concurrency';
 
@@ -55,14 +55,6 @@ export default Component.extend({
 
   url: null,
 
-  queryParams: computed('params.[]', function() {
-    let defaultParams = { dpr: window.devicePixelRatio };
-    let params = this.params || {};
-    let finalParams = Object.assign(defaultParams, params);
-
-    return buildQueryParams(finalParams);
-  }),
-
   imgSrc: computed('url', 'queryParams', function() {
     let {
       url,
@@ -72,7 +64,40 @@ export default Component.extend({
     return `${url}?${queryParams}`;
   }),
 
+  isConversationNeeded: match('url', /\.(heic)$/),
+
   width: and('includeDimensions', 'params.w'),
 
   height: and('includeDimensions', 'params.h'),
+
+  defaultParams: computed('isConversationNeeded', function() {
+    let { isConversationNeeded } = this;
+
+    let defaultParams = { dpr: window.devicePixelRatio };
+
+    if (isConversationNeeded) {
+      defaultParams.fm = 'jpg';
+    }
+
+    return defaultParams;
+  }),
+
+  finalParams: computed('params.[]', 'defaultParams.[]', function() {
+    let {
+      defaultParams,
+      params,
+    } = this;
+
+    if (params) {
+      return { ...defaultParams, ...params };
+    } else {
+      return { ...defaultParams };
+    }
+  }),
+
+  queryParams: computed('finalParams.[]', function() {
+    let { finalParams } = this;
+
+    return buildQueryParams(finalParams);
+  }),
 });
