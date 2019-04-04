@@ -146,4 +146,21 @@ module('Integration | Component | imgix-photo', function(hooks) {
 
     assert.dom('img').hasAttribute('src', expectedSrc);
   });
+
+  test('when no params provided', async function(assert) {
+    this.setProperties({
+      url: actualImgUrl,
+    });
+
+    let dpr = window.devicePixelRatio;
+
+    let expectedSrc = `${actualImgUrl}?dpr=${dpr}`;
+
+    await render(hbs`<ImgixPhoto
+      @url={{url}}
+      class="SomeClass"
+    />`);
+
+    assert.dom('img').hasAttribute('src', expectedSrc);
+  });
 });
