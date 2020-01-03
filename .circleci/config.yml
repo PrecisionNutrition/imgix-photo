@@ -90,7 +90,7 @@ jobs:
           command: |
             yarn ember try:one ember-release --skip-cleanup
 
-  run_antique_tests:
+  run_classic_tests:
     <<: *defaults
 
     steps:
@@ -98,9 +98,9 @@ jobs:
           at: .
 
       - run:
-          name: 'Run Tests for Ember 3.4'
+          name: 'Run Tests for Ember Classic'
           command: |
-            yarn ember try:one ember-lts-3.4 --skip-cleanup
+            yarn ember try:one ember-classic --skip-cleanup
 
   run_beta_tests:
     <<: *defaults
@@ -126,18 +126,6 @@ jobs:
           command: |
             yarn ember try:one ember-canary --skip-cleanup
 
-  run_with_jquery_tests:
-    <<: *defaults
-
-    steps:
-      - attach_workspace:
-          at: .
-
-      - run:
-          name: 'Run Tests for Ember Canary'
-          command: |
-            yarn ember try:one ember-default-with-jquery --skip-cleanup
-
 workflows:
   version: 2
   test_and_deploy:
@@ -160,7 +148,7 @@ workflows:
           requires:
             - run_default_tests
 
-      - run_antique_tests:
+      - run_classic_tests:
           requires:
             - run_default_tests
 
