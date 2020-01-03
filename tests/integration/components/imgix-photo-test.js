@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const actualImgUrl = 'https://es-dev.imgix.net/profiles/testimonials/2019-02/6de49b21-8c89-43ca-958e-a9ce3918b528/731b9e53-5419-4f73-82b7-639cb194f2ba.jpeg';
@@ -43,6 +43,10 @@ module('Integration | Component | imgix-photo', function(hooks) {
     assert.dom('img').hasAttribute('src', expectedSrc);
 
     assert.dom('img').hasClass('SomeClass');
+
+    await waitFor('.is-complete');
+
+    assert.dom('img').hasClass('is-complete');
   });
 
   test('can exclude width and height attributes even when params set', async function(assert) {
