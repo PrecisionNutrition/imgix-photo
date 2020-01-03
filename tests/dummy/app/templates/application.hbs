@@ -1,10 +1,10 @@
-<h1 id="title">Low Level <tt>ImgixPhoto</tt> Component</h1>
+<h1 id="title">Low Level <code>ImgixPhoto</code> Component</h1>
 
 <h2>Basic usage</h2>
 
 <ImgixPhoto
   @alt="Yo dawg"
-  @url={{actualImgUrl}}
+  @url={{this.actualImgUrl}}
   @params={{hash
     w="200"
     h="300"
@@ -20,7 +20,7 @@
   <ImgixPhoto
     @autoSetDimensions={{false}}
     @alt="I'm kinda sort responsive"
-    @url={{actualImgUrl}}
+    @url={{this.actualImgUrl}}
     @params={{hash
       w="200"
       h="300"
