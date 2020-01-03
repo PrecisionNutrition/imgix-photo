@@ -1,1 +1,11 @@
-{{yield}}
+<img
+  alt={{@alt}}
+  height={{this.height}}
+  width={{this.width}}
+  src={{this.imgSrc}}
+  class="{{if this.isComplete "is-complete"}} {{if this.isLoading "is-loading"}}"
+
+  ...attributes
+
+  {{on "load" (perform this.updateStateClasses)}}
+>
