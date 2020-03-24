@@ -64,7 +64,7 @@ jobs:
 
       - run:
           name: 'Run JS Lint'
-          command: yarn lint:js
+          command: yarn lint
 
   run_default_tests:
     <<: *defaults
@@ -76,7 +76,7 @@ jobs:
       - run:
           name: 'Run Tests for Default Ember'
           command: |
-            yarn test
+            yarn test:ember
 
   run_release_tests:
     <<: *defaults
