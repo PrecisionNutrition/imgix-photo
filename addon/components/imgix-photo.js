@@ -1,13 +1,10 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-import { computed } from '@ember/object';
-import { and, match } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 
 import { task } from 'ember-concurrency';
 
 import buildQueryParams from '../utils/build-query-params';
-
-import layout from '../templates/components/imgix-photo';
 
 /**
  * Display an image we have previously uploaded the Imgix API.
@@ -15,90 +12,72 @@ import layout from '../templates/components/imgix-photo';
  * https://docs.imgix.com/
  */
 export default class ImgixPhoto extends Component {
-  tagName = '';
+  @tracked
+  isComplete = false;
 
-  layout = layout;
+  @tracked
+  isLoading = true;
 
-  autoSetDimensions = true;
-
-  params = null;
-
-  url = null;
-
-  @(task(function * () {
-    return yield { isComplete: true, isLoading: false };
-  }).cancelOn('willDestroyElement'))
-  updateStateClasses;
-
-  @computed('updateStateClasses.lastSuccessful.value.isComplete')
-  get isComplete() {
-    let lastSuccessfulState = this.updateStateClasses.lastSuccessful;
-
-    return lastSuccessfulState && lastSuccessfulState.value.isComplete;
-  }
-
-  @computed('updateStateClasses.lastSuccessful.value.isLoading')
-  get isLoading() {
-    let lastSuccessfulState = this.updateStateClasses.lastSuccessful;
-
-    return !lastSuccessfulState || lastSuccessfulState.value.isLoading;
-  }
-
-  @computed('autoSetDimensions')
-  get includeDimensions() {
-    let { autoSetDimensions } = this;
-
-    // need `null` to exclude attribute from bindings
-    return autoSetDimensions ? true : null;
-  }
-
-  @computed('url', 'queryParams')
-  get imgSrc() {
-    let {
-      url,
-      queryParams,
+  get autoSetDimensions() {
+    const {
+      args: {
+        autoSetDimensions,
+      },
     } = this;
 
-    return `${url}?${queryParams}`;
+    if (typeof autoSetDimensions === 'undefined') {
+      return true;
+    } else {
+      return autoSetDimensions;
+    }
   }
 
-  @match('url', /\.(heic)$/) isConversationNeeded;
+  @(task(function * () {
+    yield;
 
-  @and('includeDimensions', 'params.w') width;
+    this.isComplete = true;
+    this.isLoading = false;
+  }).cancelOn('willDestroy'))
+  updateStateClasses;
 
-  @and('includeDimensions', 'params.h') height;
+  get includeDimensions() {
+    // need `null` to exclude attribute from bindings
+    return this.autoSetDimensions ? true : null;
+  }
 
-  @computed('isConversationNeeded')
+  get isConversionNeeded() {
+    const { args: { url } } = this;
+
+    return url?.match(/\.(heic)$/);
+  }
+
+  get width() {
+    return this.includeDimensions && this.args.params?.w;
+  }
+
+  get height() {
+    return this.includeDimensions && this.args.params?.h;
+  }
+
   get defaultParams() {
-    let { isConversationNeeded } = this;
-
     let defaultParams = { dpr: window.devicePixelRatio };
 
-    if (isConversationNeeded) {
+    if (this.isConversionNeeded) {
       defaultParams.fm = 'jpg';
     }
 
     return defaultParams;
   }
 
-  @computed('params.[]', 'defaultParams.[]')
   get finalParams() {
-    let {
-      defaultParams,
-      params,
-    } = this;
-
-    if (params) {
-      return { ...defaultParams, ...params };
-    } else {
-      return { ...defaultParams };
-    }
+    return { ...this.defaultParams, ...this.args.params };
   }
 
-  @computed('finalParams.[]')
   get queryParams() {
-    let { finalParams } = this;
+    return buildQueryParams(this.finalParams);
+  }
 
-    return buildQueryParams(finalParams);
+  get imgSrc() {
+    return `${this.args.url}?${this.queryParams}`;
   }
 }

@@ -23,26 +23,24 @@ module('Integration | Component | imgix-photo', function(hooks) {
     let expectedSrc = `${actualImgUrl}?dpr=${dpr}&fit=crop&h=400&sepia=88&w=300`;
 
     await render(hbs`<ImgixPhoto
-      @url={{url}}
-      @alt={{alt}}
+      @url={{this.url}}
+      @alt={{this.alt}}
       @params={{hash
-        w=w
-        h=h
-        fit=fit
-        sepia=sepia
+        w=this.w
+        h=this.h
+        fit=this.fit
+        sepia=this.sepia
       }}
       class="SomeClass"
     />`);
 
-    assert.dom('img').hasAttribute('width', '300');
-
-    assert.dom('img').hasAttribute('height', '400');
-
-    assert.dom('img').hasAttribute('alt', 'Test!');
-
-    assert.dom('img').hasAttribute('src', expectedSrc);
-
-    assert.dom('img').hasClass('SomeClass');
+    assert
+      .dom('img')
+      .hasAttribute('width', '300')
+      .hasAttribute('height', '400')
+      .hasAttribute('alt', 'Test!')
+      .hasAttribute('src', expectedSrc)
+      .hasClass('SomeClass');
 
     await waitFor('.is-complete');
 
@@ -66,22 +64,22 @@ module('Integration | Component | imgix-photo', function(hooks) {
 
     await render(hbs`<ImgixPhoto
       @autoSetDimensions={{false}}
-      @url={{url}}
-      @alt={{alt}}
+      @url={{this.url}}
+      @alt={{this.alt}}
       @params={{hash
-        w=w
-        h=h
-        fit=fit
-        sepia=sepia
+        w=this.w
+        h=this.h
+        fit=this.fit
+        sepia=this.sepia
       }}
       class="SomeClass"
     />`);
 
-    assert.dom('img').doesNotHaveAttribute('width', '300');
-
-    assert.dom('img').doesNotHaveAttribute('height', '400');
-
-    assert.dom('img').hasAttribute('src', expectedSrc);
+    assert
+      .dom('img')
+      .doesNotHaveAttribute('width', '300')
+      .doesNotHaveAttribute('height', '400')
+      .hasAttribute('src', expectedSrc);
   });
 
   test('converts HEIC images auto-magically', async function(assert) {
@@ -103,13 +101,13 @@ module('Integration | Component | imgix-photo', function(hooks) {
 
     await render(hbs`<ImgixPhoto
       @autoSetDimensions={{false}}
-      @url={{url}}
-      @alt={{alt}}
+      @url={{this.url}}
+      @alt={{this.alt}}
       @params={{hash
-        w=w
-        h=h
-        fit=fit
-        sepia=sepia
+        w=this.w
+        h=this.h
+        fit=this.fit
+        sepia=this.sepia
       }}
       class="SomeClass"
     />`);
@@ -136,14 +134,14 @@ module('Integration | Component | imgix-photo', function(hooks) {
 
     await render(hbs`<ImgixPhoto
       @autoSetDimensions={{false}}
-      @url={{url}}
-      @alt={{alt}}
+      @url={{this.url}}
+      @alt={{this.alt}}
       @params={{hash
-        w=w
-        h=h
-        fit=fit
-        fm=fm
-        sepia=sepia
+        w=this.w
+        h=this.h
+        fit=this.fit
+        fm=this.fm
+        sepia=this.sepia
       }}
       class="SomeClass"
     />`);
@@ -161,7 +159,7 @@ module('Integration | Component | imgix-photo', function(hooks) {
     let expectedSrc = `${actualImgUrl}?dpr=${dpr}`;
 
     await render(hbs`<ImgixPhoto
-      @url={{url}}
+      @url={{this.url}}
       class="SomeClass"
     />`);
 
