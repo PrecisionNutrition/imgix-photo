@@ -3,12 +3,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-const actualImgUrl = 'https://es-dev.imgix.net/profiles/testimonials/2019-02/6de49b21-8c89-43ca-958e-a9ce3918b528/731b9e53-5419-4f73-82b7-639cb194f2ba.jpeg';
+const actualImgUrl =
+  'https://es-dev.imgix.net/profiles/testimonials/2019-02/6de49b21-8c89-43ca-958e-a9ce3918b528/731b9e53-5419-4f73-82b7-639cb194f2ba.jpeg';
 
-module('Integration | Component | imgix-photo', function(hooks) {
+module('Integration | Component | imgix-photo', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders as expected', async function(assert) {
+  test('it renders as expected', async function (assert) {
     this.setProperties({
       alt: 'Test!',
       url: actualImgUrl,
@@ -47,7 +48,7 @@ module('Integration | Component | imgix-photo', function(hooks) {
     assert.dom('img').hasClass('is-complete');
   });
 
-  test('can exclude width and height attributes even when params set', async function(assert) {
+  test('can exclude width and height attributes even when params set', async function (assert) {
     this.setProperties({
       alt: 'Test!',
       url: actualImgUrl,
@@ -56,7 +57,6 @@ module('Integration | Component | imgix-photo', function(hooks) {
       fit: 'crop',
       sepia: 88,
     });
-
 
     let dpr = window.devicePixelRatio;
 
@@ -82,7 +82,7 @@ module('Integration | Component | imgix-photo', function(hooks) {
       .hasAttribute('src', expectedSrc);
   });
 
-  test('converts HEIC images auto-magically', async function(assert) {
+  test('converts HEIC images auto-magically', async function (assert) {
     let heicUrl = 'http://example.com/image.heic';
 
     this.setProperties({
@@ -93,7 +93,6 @@ module('Integration | Component | imgix-photo', function(hooks) {
       fit: 'crop',
       sepia: 88,
     });
-
 
     let dpr = window.devicePixelRatio;
 
@@ -115,7 +114,7 @@ module('Integration | Component | imgix-photo', function(hooks) {
     assert.dom('img').hasAttribute('src', expectedSrc);
   });
 
-  test('does not stomp on `fm` if provided for a HEIC image', async function(assert) {
+  test('does not stomp on `fm` if provided for a HEIC image', async function (assert) {
     let heicUrl = 'http://example.com/image.heic';
 
     this.setProperties({
@@ -149,7 +148,7 @@ module('Integration | Component | imgix-photo', function(hooks) {
     assert.dom('img').hasAttribute('src', expectedSrc);
   });
 
-  test('when no params provided', async function(assert) {
+  test('when no params provided', async function (assert) {
     this.setProperties({
       url: actualImgUrl,
     });
