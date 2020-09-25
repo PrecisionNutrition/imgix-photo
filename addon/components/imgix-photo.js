@@ -20,9 +20,7 @@ export default class ImgixPhoto extends Component {
 
   get autoSetDimensions() {
     const {
-      args: {
-        autoSetDimensions,
-      },
+      args: { autoSetDimensions },
     } = this;
 
     if (typeof autoSetDimensions === 'undefined') {
@@ -32,7 +30,7 @@ export default class ImgixPhoto extends Component {
     }
   }
 
-  @(task(function * () {
+  @(task(function* () {
     yield;
 
     this.isComplete = true;
@@ -46,7 +44,9 @@ export default class ImgixPhoto extends Component {
   }
 
   get isConversionNeeded() {
-    const { args: { url } } = this;
+    const {
+      args: { url },
+    } = this;
 
     return url?.match(/\.(heic)$/);
   }
