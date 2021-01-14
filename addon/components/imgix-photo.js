@@ -78,6 +78,14 @@ export default class ImgixPhoto extends Component {
   }
 
   get imgSrc() {
+    if (this.args.url.match(/\?/)) {
+      if (this.args.params) {
+        console.warn('ImgixPhoto was given a `url` which contains query params. Ignoring `params` attribute.');
+      }
+
+      return this.args.url;
+    }
+
     return `${this.args.url}?${this.queryParams}`;
   }
 }
