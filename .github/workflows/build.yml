@@ -165,7 +165,7 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Run canary tests
+      - name: Run comment tests
         run: |
           yarn ember try:one ember-3.22 --skip-cleanup
 
