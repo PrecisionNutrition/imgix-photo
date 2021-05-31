@@ -30,13 +30,19 @@ export default class ImgixPhoto extends Component {
     }
   }
 
-  @(task(function* () {
+  @task(function* () {
     yield;
 
     this.isComplete = true;
     this.isLoading = false;
-  }).cancelOn('willDestroy'))
+  })
   updateStateClasses;
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+
+    this.updateStateClasses.cancelAll();
+  }
 
   get includeDimensions() {
     // need `null` to exclude attribute from bindings
